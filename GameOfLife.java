@@ -1,5 +1,4 @@
 public class HelloWorld{
-
      public static void main(String []args){
         int[][] b = {{1,1},{1,0}};
         int[][] c = {{0,0,0,0},{0,1,1,0},{0,1,1,0},{0,0,0,0}};
@@ -15,7 +14,7 @@ public class HelloWorld{
      }
      
     public static void gameOfLife(int[][] board) {
-        int m = board.length;
+        int m = board.length;  
         int n = board[0].length;
         int[][] res = new int[m][n];
         
