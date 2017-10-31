@@ -87,3 +87,45 @@ public String deDup(String input) {
   }
   return sb.reverse().toString();
 }
+
+
+//8-2 reverse words in string
+  public String reverseWords(String input) {
+    String[] array = input.split(" ");
+    StringBuilder sb = new StringBuilder();
+    for (int i = array.length - 1; i >= 0; i--) {
+      if (array[i] != "")
+      sb.append(array[i]).append(' ');
+    }
+    return sb.toString().trim();
+  }
+  //solution 2
+    public String reverseWords(String input) {
+    int i = 0;
+    char[] array = input.toCharArray();
+    
+    while (i < array.length) {
+      while (i < array.length && array[i] == ' ') {
+        i++;
+      }
+      if (i == array.length) break;
+      int j = i;
+      while (j < array.length && array[j] != ' ') {
+        j++;
+      }
+      reverse(array, i, j-1);
+      i = j;
+    }
+    reverse(array, 0, array.length - 1);
+    return new String(array);
+  }
+  
+  public void reverse(char[] array, int i, int j) {
+    while (i <= j) {
+      char c = array[i];
+      array[i] = array[j];
+      array[j] = c;
+      i++;
+      j--;
+    }
+  }
