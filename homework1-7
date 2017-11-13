@@ -212,3 +212,151 @@ public String deDup(String input) {
       array[index--] = t.charAt(i); 
     }
   }
+
+//8-4 String Decrompress
+  public String decompress(String input) {
+    StringBuilder sb = new StringBuilder();
+    int i = 0;
+    while (i < input.length()) {
+      char c = input.charAt(i);
+      if (Character.isLetter(c)) {
+        i++;
+        int count = 0;
+        while (i < input.length() && Character.isDigit(input.charAt(i))) {
+          count = count * 10 + input.charAt(i) - '0';
+          i++;
+        }
+        for (int k = 0; k < count; k++) {
+          sb.append(c);
+        }
+      }
+    }
+    return sb.toString();
+  }
+
+//8-5 reorder array
+  public int[] reorder(int[] array) {
+    if(array == null) {
+      return array;
+    }
+    if (array.length % 2 == 0) {
+      convert(array, 0, array.length - 1);
+    } else {
+      convert(array, 0, array.length - 2);
+    }
+    return array;
+  }
+  
+  public void convert(int[] array, int left, int right) {
+    if (left + 1 >= right) {
+      return;
+    }
+    
+    int size = right - left + 1;
+    int mid = left + size/2;
+    int leftMid = left + size/4;
+    int rightMid = left + size*3/4;
+    
+    reverse(array, leftMid, mid - 1);
+    reverse(array, mid, rightMid - 1);
+    reverse(array, leftMid, rightMid - 1);
+    
+    convert(array, left, left + 2*(leftMid - left) - 1);
+    convert(array, left + 2*(leftMid - left), right);
+    
+  }
+
+  
+  public void reverse(int[] array, int i , int j) {
+    while (i <= j) {
+      swap(array, i++, j--);
+    }
+  }
+  
+  public void swap(int[] array, int i, int j) {
+    int temp = array[i];
+    array[i] = array[j];
+    array[j] = temp;
+  }
+
+//8-6 longest substring without duplicate
+  public int longest(String input) {
+    Set<Character> set = new HashSet<>();
+    int i = 0;
+    int j = 0;
+    int max = Integer.MIN_VALUE;
+    
+    while (j < input.length()) {
+      if (!set.contains(input.charAt(j))) {
+        set.add(input.charAt(j));
+        max = Math.max(max, j - i + 1);
+        j++;
+      } else {
+        set.remove(input.charAt(i));
+        i++;
+      }
+    }
+    return max;
+  }
+
+//8-7 all anagram
+  public List<Integer> allAnagrams(String s, String l) {
+    List<Integer> list = new ArrayList<>();
+    if (s.length() > l.length()) return list;
+    int[] counts = new int[256];
+    int[] countl = new int[256];
+    
+    for (int i = 0; i < s.length(); i++) {
+      counts[s.charAt(i)]++;
+      countl[l.charAt(i)]++;
+    }
+    if (Arrays.equals(counts, countl)) {
+      list.add(0);
+    }
+    
+    for (int i = s.length(); i < l.length(); i++) {
+      countl[l.charAt(i)]++;
+      countl[l.charAt(i - s.length())]--;
+      if (Arrays.equals(counts, countl)) {
+        list.add(i - s.length() + 1);
+      }
+    }
+    return list;
+  }
+
+
+  //n queens
+  public class Solution {
+  public List<List<Integer>> nqueens(int n) {
+    List<List<Integer>> res = new ArrayList<List<Integer>>();
+    if (n == 0) return res;
+    List<Integer> list = new ArrayList<>();
+    dfs(n, 0, list, res);
+    return res;
+  }
+  
+  public void dfs(int n, int index, List<Integer> list, List<List<Integer>> res) {
+    if (list.size() == n) {
+      res.add(new ArrayList<>(list));
+      return;
+    }
+    
+    for (int i = 0; i < n; i++) {
+      list.add(i);
+      if (isValid(list)) {
+        dfs(n, index+1, list, res);
+      }
+      list.remove(list.size() - 1);
+    }
+  }
+  
+  public boolean isValid(List<Integer> list) {
+    int size = list.size();
+    for (int i = 0; i < size - 1; i++) {
+      if (list.get(size - 1) == list.get(i)) return false;
+      if (Math.abs(list.get(size - 1) - list.get(i)) == (size - 1 - i)) return false;
+    }
+    return true;
+  }
+
+}
