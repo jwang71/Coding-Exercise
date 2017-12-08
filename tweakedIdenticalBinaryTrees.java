@@ -17,3 +17,4 @@ public class Solution {
     ||(isTweakedIdentical(one.left, two.right)&&isTweakedIdentical(one.right, two.left));
   }
 }
+
