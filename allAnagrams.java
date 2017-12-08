@@ -39,3 +39,34 @@ public class Solution {
     return true;
   }
 }
+
+
+
+
+//solution 2
+
+public class Solution {
+  public List<Integer> allAnagrams(String s, String l) {
+    List<Integer> list = new ArrayList<>();
+    if (s.length() > l.length()) return list;
+    int[] counts = new int[256];
+    int[] countl = new int[256];
+    
+    for (int i = 0; i < s.length(); i++) {
+      counts[s.charAt(i)]++;
+      countl[l.charAt(i)]++;
+    }
+    
+    if (Arrays.equals(counts, countl)) {
+      list.add(0);
+    }
+    for (int i = s.length(); i < l.length(); i++) {
+      countl[l.charAt(i)]++;
+      countl[l.charAt(i - s.length())]--;
+      if (Arrays.equals(counts, countl)) {
+        list.add(i - s.length() + 1);
+      }
+    }
+    return list;
+  }
+}
