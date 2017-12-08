@@ -1,4 +1,3 @@
-public class Solution {
   public List<Integer> spiral(int[][] matrix) {
     List<Integer> list = new ArrayList<>();
     if (matrix == null) return list;
@@ -40,4 +39,3 @@ public class Solution {
     }    
     return list;
   }
-}
