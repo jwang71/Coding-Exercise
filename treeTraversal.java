@@ -56,6 +56,34 @@
     return res;
   }
 
+  //second solution for iterative postorder traversal
+  public List<Integer> postOrder(TreeNode root) {
+    List<Integer> res = new ArrayList<>();
+    if (root == null) return res;
+    TreeNode pre = null;
+    TreeNode cur = root;
+    Stack<TreeNode> stack = new Stack<>();
+    stack.push(root);
+    
+    while (!stack.isEmpty()) {
+      cur = stack.peek();
+      //traverse down the tree
+      if (pre == null || pre.left == cur || pre.right == cur) {
+        if (cur.left != null) {
+          stack.push(cur.left);
+        } else if (cur.right != null) {
+          stack.push(cur.right);  
+        }
+      } else if (cur.left == pre) { //traverse up from left
+        if (cur.right != null) stack.push(cur.right);
+      } else { // traverse up from right
+        res.add(cur.key);
+        stack.pop();
+      }
+      pre = cur;
+    }
+    return res;
+  }
 //recursion
   public List<Integer> inOrder(TreeNode root) {
     // Write your solution here.
